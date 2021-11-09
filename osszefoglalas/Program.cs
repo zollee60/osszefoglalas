@@ -18,6 +18,11 @@ namespace osszefoglalas
             Kor = kor;
             Magassag = magassag;
         }
+
+        public override string ToString()
+        {
+            return $"Név: {Nev}, kor: {Kor}, magasság: {Magassag}";
+        }
     }
     class Program
     {
@@ -55,7 +60,7 @@ namespace osszefoglalas
             Ember peter = new Ember("Péter", 36, 178);
             Ember laci = new Ember("László", 20, 160);
 
-            List<Ember> emberek = new List<Ember>() { jani, mate, bela, peter, laci };
+            List<Ember> emberek = new List<Ember>() { jani, peter, bela, mate, laci };
 
             // Select()
             List<string> nevek = emberek.Select(ember => ember.Nev).ToList();
@@ -65,6 +70,25 @@ namespace osszefoglalas
             // OrderBy() - Osszetett objektumokat tartalmazó listák rendezésére
             List<Ember> rendezettEletkorSzerint = emberek.OrderBy(ember => ember.Kor).ToList();
 
+            // Max(), Min(), Count()
+            int maxMagassag = emberek.Max(ember => ember.Magassag); // Maximum keresés
+            int minimumKor = emberek.Min(ember => ember.Kor); // Minimum keresés
+            int parosKoruakSzama = emberek.Count(ember => ember.Kor % 2 == 0); // Feltételes megszámolás
+
+            // Any(), Find(), FindAll()
+            // Van-e 190 cm-nel magasabb ember a listaban?
+            bool vanEBatár = emberek.Any(ember => ember.Magassag > 190); // Eldontés tétel
+
+            // Keressük meg azt az Embert, akinek Péter a neve;
+            Ember megtaláltPeti = emberek.Find(ember => ember.Nev == "Péter");
+            int petiIndexe = emberek.IndexOf(megtaláltPeti);
+
+            // Keressük meg azt az Embert, aki 20 évnél idősebb
+            Ember idősebb = emberek.Find(ember => ember.Kor > 20); // Ha tobb elem is megfelel a feltételnek, akkor az első előfordulást adja vissza
+            Console.WriteLine(idősebb);
+
+            // Válogassuk ki a 160 cm-nél magasabbakat
+            List<Ember> magasabbak = emberek.FindAll(ember => ember.Magassag > 160);
 
         }
     }
